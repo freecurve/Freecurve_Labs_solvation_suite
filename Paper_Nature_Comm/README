@@ -9,6 +9,8 @@ Inputs and running of Molecular Dynamics Simulations
 	CPU binary should run on recent UBUNTU systems and other linux flavors. 
 	For any problems use the 'issues' in https://github.com/freecurve/solvation_examples repository
 	
+	if you do not wish to reveal your name we can create an anonymous assembla login via the editor
+
 	Post-processing scripts require MATLAB > R2017
 
 2) Running examples: 
@@ -51,53 +53,13 @@ Arbalest binaries revision 3364
 	Runs on CPU only	
 	
 
-use --help option to run Arbalest help, e.g.
+b) use --help option to run Arbalest help, e.g.
 $./ArbalestLight-FloatDoubleFixed.r3364 --help
 
 Welcome to ARBALEST!
 Executable file name: ./ArbalestLight-FloatDoubleFixed.r3364
 Command line is: ./ArbalestLight-FloatDoubleFixed.r3364 --help
-Allowed options:
-  -C [ --config ] arg (=./config.xml) Configuration file
-  --log arg (=./Arbalest.log)         Log file name
-  --loglevel arg (=2)                 Logging level [0..5]
-  --gpu arg (=0)                      Whether to use GPU for simulation
-  -I [ --gpudeviceid ] arg (=-1)      Which GPU device should be used for
-                                      simulation
-  -S [ --gpudevicescript ] arg        Execute this script to define which GPU
-                                      device should be used for simulation
-  -P [ --mpiprocdelay ] arg (=10)     Delay interval, in sec, between starts of
-                                      successive MPI processes. Required for
-                                      correct assignment of GPU devices. Works
-                                      only when 'gpu' flag is true.
-  --gputestinfo arg (=0)              Do output GPU test info files? (test.xml,
-                                      mem.xml,meas.xml)
-  --gpusynchronize arg (=0)           Turn on synchronization of [all] GPU
-                                      kernels with CPU (for correct timings
-                                      only)
-  --omp arg (=1)                      Number of OpenMP threads
-  --verify arg (=0)                   Turn on verification of parallel
-                                      DomainController (currently used for GPU
-                                      only)
-  --outTS arg (=1)                    Whether to write time stamp in output
-                                      files names
-  -D [ --dumpconfig ] arg (=1)        Whether to dump config file or not
-  -M [ --mkdirs ] arg (=1)            Whether to create output directories or
-                                      not
-  -v [ --version ]                    Print program version
-  -h [ --help ]                       Print help message
-
-
-Floating point precision: single
-Always use double in atomwise functions: true
-Store coordinates in Fixed Precision: true
-Store velocities in Fixed Precision: true
-Accumulate forces in Fixed Precision: true
-Force initialization method: F(-1) = F(0)
-Using OpenMP parallelization: yes
-Using FFT library: yes
-GPU support: disabled
-Version: 0.0.0.3363
+****** help output *****
 
 b) The atom-typified input files for Methane, Benzene and water (HyperChemformat-HIN) can be found in HIN
 
