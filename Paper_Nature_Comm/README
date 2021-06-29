@@ -8,8 +8,9 @@ Inputs and running of Molecular Dynamics Simulations
 	There are two linux versions of the binaries: cuda and CPU only. the 
 	CPU binary should run on recent UBUNTU systems and other linux flavors. 
 	For any problems use the 'issues' in https://github.com/freecurve/solvation_examples repository
+	if you wish to remain anonymous submit the links via and you can submit anonymous issues via 		https://gitreports.com/issue/freecurve/solvation_examples (will come as user 'freecurve')
 	
-	if you do not wish to reveal your name we can create an anonymous assembla login via the editor
+
 
 	Post-processing scripts require MATLAB > R2017
 
