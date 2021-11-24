@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="Windows-1251" ?>
+<FFConfiguration>
+     <FFDescription Type="QMPFF" Title="ARROW">
+                  <FilesDescription>
+                        <File Type="SQLITE" >./ffdb.sqlite</File>
+                        <File Type="BNDK">./aux_files/BNDK.PAR</File>
+                        <File Type="DFSB">./aux_files/DFSB.PAR</File>
+                 </FilesDescription>
+        </FFDescription>
+</FFConfiguration>

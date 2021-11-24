@@ -1,0 +1,413 @@
+<Configuration>
+   <ConfigureInteractions>
+      <ForceField Title="ARROW">
+         <FFConfig>../../../Parameters/FFConfig.xml</FFConfig>
+      <Settings>
+            <Param Title="RTabulated">10.0</Param>
+         <Param Title="EqTolerance">0.0001</Param>
+         <Param Title="NTabulated">10000</Param>
+         <Param Title="PolarConvergenceTol">0.0001</Param>
+         <Param Title="PolarConvergenceTolPME">0.0</Param>
+         <Param Title="PolarEquilibrationMaxSteps">150</Param>
+        <Param Title="RepulsionFactor">0.010000</Param>
+        <Param Title="RepulsionPower">-8.000000</Param>
+         </Settings>
+      </ForceField>
+   <Volume>
+         <Lx>32.0</Lx>
+      <Ly>32.0</Ly>
+      <Lz>32.0</Lz>
+      </Volume>
+   <Boundary>
+         <BoundX>PERIODIC</BoundX>
+      <BoundY>PERIODIC</BoundY>
+      <BoundZ>PERIODIC</BoundZ>
+      </Boundary>
+   <LongRange>
+         <RCutOff>9.0</RCutOff>
+      <RSwitch>9.0</RSwitch>
+      <RCutOffVdW>9.0</RCutOffVdW>
+      <RSwitchVdW>9.0</RSwitchVdW>
+      <dRCutOff>2.0</dRCutOff>
+      <NLstRefresh>100</NLstRefresh>
+      <NRecalc>
+            <Shell R="9.0">5</Shell>
+         <Shell R="8.0">3</Shell>
+         <Shell R="7.0">2</Shell>
+         </NRecalc>
+      <LRangeCoulomb Type="PME">
+            <Settings>
+               <Param Title="GridFragmentationX">32</Param>
+            <Param Title="GridFragmentationY">32</Param>
+            <Param Title="GridFragmentationZ">32</Param>
+            <Param Title="BSplineOrder">5</Param>
+            <Param Title="Tolerance">5</Param>
+            <Param Title="DielConstRF">1000000000000.0</Param>
+            </Settings>
+         </LRangeCoulomb>
+      <LRangeVdW>
+            <CorrectEnergy>true</CorrectEnergy>
+         <CorrectPressure>true</CorrectPressure>
+         </LRangeVdW>
+      </LongRange>
+   <Constraints>
+         <Tolerance>0.01</Tolerance>
+      <ConstrGeom>EquilibriumGeom</ConstrGeom>
+      </Constraints>
+   </ConfigureInteractions>
+<Topology>
+      <MoleculeDefinition Title="LIG">
+         <StructureType>SINGLERES</StructureType>
+      <StructureDefinition>
+            <Instance Title="StateA">
+               <TopologySource>STRUCT</TopologySource>
+            <TopologyFiles>
+                  <File Type="HIN">../../../HIN/H2O1_Water.hin</File>
+               </TopologyFiles>
+            <StructureFiles>
+                  <File Type="HIN">../../../HIN/H2O1_Water.hin</File>
+               </StructureFiles>
+            <StructureSettings>
+                  <GenerateChargeGroups>AUTO</GenerateChargeGroups>
+               <ConstrainBonds>false</ConstrainBonds>
+               <ConstrainAngles>false</ConstrainAngles>
+               <ConstrainTorsions>false</ConstrainTorsions>
+               </StructureSettings>
+            </Instance>
+         </StructureDefinition>
+      </MoleculeDefinition>
+   <MoleculeDefinition Title="SLV">
+         <StructureType>SINGLERES</StructureType>
+      <StructureDefinition>
+            <Instance Title="StateA">
+               <TopologySource>STRUCT</TopologySource>
+            <TopologyFiles>
+                  <File Type="HIN">../../../HIN/SLV_Water.hin</File>
+               </TopologyFiles>
+            <StructureFiles>
+                  <File Descr="MolTemplate" Type="HIN">../../../HIN/SLV_Water.hin</File>
+               </StructureFiles>
+            <StructureSettings>
+                  <GenerateChargeGroups>AUTO</GenerateChargeGroups>
+               <ConstrainBonds>false</ConstrainBonds>
+               <ConstrainAngles>false</ConstrainAngles>
+               <ConstrainTorsions>false</ConstrainTorsions>
+               </StructureSettings>
+            </Instance>
+         </StructureDefinition>
+      </MoleculeDefinition>
+   </Topology>
+<MolecularSystem ForcePlacement="true">
+      <SystemState Title="LIGSolvated">
+         <Load>
+            <Molecules>
+               <Molecule Instance="StateA" Title="LIG" />
+            <Molecule Instance="StateA" Title="SLV" />
+            </Molecules>
+         <StructureFiles>
+               <File Type="HIN">../../../HIN/H2O1_Water.hin</File>
+            </StructureFiles>
+         </Load>
+      <GenerateSolvent>
+            <Rule MaxRotationAngle="2.5" OffsetRadius="2.0">
+               <Molecule Instance="StateA" Title="SLV" />
+            <MolQty Mode="Density">0.997</MolQty>
+            <Placement>RANDOM</Placement>
+            </Rule>
+         </GenerateSolvent>
+      </SystemState>
+   <SystemState Title="Solvent" TransitionFrom="LIGSolvated">
+         <Annihilate>
+            <Molecules>
+               <Molecule Instance="StateA" Title="LIG" />
+            </Molecules>
+         </Annihilate>
+      </SystemState>
+   </MolecularSystem>
+<ConfigureTI>
+      <Transition SeqID="1" Title="LIGAnnihilation">
+         <Settings>
+            <Param Title="StateI">LIGSolvated</Param>
+         <Param Title="StateF">Solvent</Param>
+         <Param Title="LambdaValues">0.0 0.05 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.75 0.8 0.85 0.9 0.95 1.0</Param>
+         <Param Title="InitialConformation">true</Param>
+         <Param Title="ScaleFactorPwr">2.0</Param>
+         <Param Title="SoftCoringRadius">1.5</Param>
+         <Param Title="SoftCoringPwr">1.0</Param>
+         <Param Title="SoftCoringCutOff">6.0</Param>
+         </Settings>
+      </Transition>
+   </ConfigureTI>
+<GroupsDefinition>
+      <Group Title="LIG" Type="UNITED">
+         <Set>
+            <LogicalItems>
+               <Item>LIG:</Item>
+            </LogicalItems>
+         </Set>
+      </Group>
+   <Group Title="LIG-SLV" Type="INTER-MOLEC">
+         <Set>
+            <LogicalItems>
+               <Item>LIG:</Item>
+            </LogicalItems>
+         </Set>
+      <Set>
+            <LogicalItems>
+               <Item>SLV:</Item>
+            </LogicalItems>
+         </Set>
+      </Group>
+   </GroupsDefinition>
+<TaskSequence>
+      <Task SeqID="1" Type="SetTIPoint">
+         <Settings>
+            <Param Title="Transition">LIGAnnihilation</Param>
+         <Param Title="TIPoint">1</Param>
+         </Settings>
+      <ConfigureAlgorithms />
+      </Task>
+   <Task SeqID="2" Type="MinEnergy">
+         <Settings>
+            <Param Title="Method">SteepestDescent</Param>
+         <Param Title="ConvergenceAccuracy">0.0000001</Param>
+         <Param Title="NumIterations">100</Param>
+         </Settings>
+      <ConfigureAlgorithms>
+
+</ConfigureAlgorithms>
+      <ConsoleOutput Do="True">
+            <Output Frequency="10" Mode="WATERFALL" NRows="100" Screen="SYSTEM">
+               <Item FunctionalGroup="SYSTEM" Param="EnrgPot" Title="EnrgPot" />
+            <Item FunctionalGroup="SYSTEM" Param="dHdL" Title="dHdL" />
+            </Output>
+         </ConsoleOutput>
+      <FileOutput OutputFolder="./Output">
+            <Output DataType="HIN" Frequency="100">
+               <Settings />
+            <FunctionalGroups>
+                  <Group>LIG</Group>
+               </FunctionalGroups>
+            </Output>
+         </FileOutput>
+      </Task>
+   <Task SeqID="3" Type="MD">
+         <Settings>
+            <Param Title="TimeStep">0.002</Param>
+         <Param Title="FastForceStepDivider">16</Param>
+         <Param Title="NumIterations">5000</Param>
+         <Param Title="NumPIMDReplicas">8</Param>
+         <Param Title="CalcLambdaNeighbors">2</Param>
+         </Settings>
+      <ConfigureAlgorithms>
+            <Algorithm Type="INIT_VELOCITY">
+               <Settings>
+                  <Param Title="RefTemp">298</Param>
+               <Param Title="Seed">3223</Param>
+               </Settings>
+            <FunctionalGroups>
+                  <Group>SYSTEM</Group>
+               </FunctionalGroups>
+            </Algorithm>
+         <Algorithm Type="THERMOSTAT">
+               <Settings>
+                  <Param Title="Type">Nose-Hoover</Param>
+               <Param Title="RefTemp">298</Param>
+               <Param Title="RelaxTime">1.0</Param>
+               <Param Title="NChain">6</Param>
+               </Settings>
+            <FunctionalGroups>
+                  <Group>SYSTEM</Group>
+               </FunctionalGroups>
+            </Algorithm>
+         </ConfigureAlgorithms>
+      <ConsoleOutput Do="True">
+            <Output Frequency="50" Mode="WATERFALL" NRows="100" Screen="SYSTEM">
+               <Item Param="Step" Title="ID" />
+            <Item FunctionalGroup="SYSTEM" Param="Temp" Title="Temp" />
+            <Item FunctionalGroup="SYSTEM" Param="EnrgPot" Title="EnrgPot" />
+            <Item FunctionalGroup="SYSTEM" Param="EnrgTotal" Title="EnrgTotal" />
+            <Item FunctionalGroup="SYSTEM" Param="Density" Title="Density" />
+            <Item FunctionalGroup="SYSTEM" Param="dHdL" Title="dHdL" />
+            </Output>
+         </ConsoleOutput>
+      <FileOutput OutputFolder="./Output">
+</FileOutput>
+      </Task>
+   <Task SeqID="5" Type="MD">
+         <Settings>
+            <Param Title="TimeStep">0.002</Param>
+         <Param Title="FastForceStepDivider">16</Param>
+         <Param Title="NumIterations">500000</Param>
+         <Param Title="NumPIMDReplicas">8</Param>
+         <Param Title="CalcLambdaNeighbors">2</Param>
+         </Settings>
+      <ConfigureAlgorithms>
+            <Algorithm Type="THERMOSTAT">
+               <Settings>
+                  <Param Title="Type">Nose-Hoover</Param>
+               <Param Title="RefTemp">298</Param>
+               <Param Title="RelaxTime">1.0</Param>
+               <Param Title="NChain">6</Param>
+               </Settings>
+            <FunctionalGroups>
+                  <Group>SYSTEM</Group>
+               </FunctionalGroups>
+            </Algorithm>
+         <Algorithm Type="BAROSTAT">
+               <Settings>
+                  <Param Title="Type">Berendsen</Param>
+               <Param Title="RefPressure">1.00000</Param>
+               <Param Title="RelaxTime">0.5</Param>
+               <Param Title="Compressibility">4.5e-5</Param>
+               </Settings>
+            <FunctionalGroups />
+            </Algorithm>
+         </ConfigureAlgorithms>
+      <ConsoleOutput Do="True">
+            <Output Frequency="50" Mode="WATERFALL" NRows="100" Screen="SYSTEM">
+               <Item Param="Step" Title="ID" />
+            <Item FunctionalGroup="SYSTEM" Param="Temp" Title="Temp" />
+            <Item FunctionalGroup="SYSTEM" Param="EnrgPot" Title="EnrgPot" />
+            <Item FunctionalGroup="SYSTEM" Param="EnrgTotal" Title="EnrgTotal" />
+            <Item FunctionalGroup="SYSTEM" Param="Density" Title="Density" />
+            <Item FunctionalGroup="SYSTEM" Param="dHdL" Title="dHdL" />
+            </Output>
+         </ConsoleOutput>
+      <FileOutput OutputFolder="./Output">
+            <Output DataType="ENE" Frequency="50">
+               <Settings>
+                  <Param Title="Time">Time</Param>
+               <Param Title="Temp">Temp</Param>
+               <Param Title="EnrgPot">EnrgPot</Param>
+               <Param Title="EnrgKin">EnrgKin</Param>
+               <Param Title="EnrgTotal">EnrgTotal</Param>
+               <Param Title="EnrgRestraint">EnrgRestraint</Param>
+               <Param Title="EnrgCoul">EnrgCoul</Param>
+               <Param Title="EnrgVdW">EnrgVdW</Param>
+               <Param Title="EnrgVdW_LRCor">EnrgVdW_LRCor</Param>
+               <Param Title="EnrgPME">EnrgPME</Param>
+               <Param Title="Pressure">Pressure</Param>
+               <Param Title="Density">Density</Param>
+               <Param Title="dHdL_Coul">dHdL_Coul</Param>
+               <Param Title="dHdL_Coul_SC">dHdL_Coul_SC</Param>
+               <Param Title="dHdL_VdW">dHdL_VdW</Param>
+               <Param Title="dHdL_VdW_SC">dHdL_VdW_SC</Param>
+               <Param Title="dHdL_Pol">dHdL_Pol</Param>
+               <Param Title="dHdL_Bonds">dHdL_Bonds</Param>
+               <Param Title="dHdL_Angles">dHdL_Angles</Param>
+               <Param Title="dHdL_StretchBend">dHdL_StretchBend</Param>
+               <Param Title="dHdL_Tors">dHdL_Tors</Param>
+               <Param Title="dHdL_OutPlane">dHdL_OutPlane</Param>
+               <Param Title="dHdL_LRCor">dHdL_LRCor</Param>
+               <Param Title="dHdL_PME">dHdL_PME</Param>
+               <Param Title="dHdL">dHdL</Param>
+               </Settings>
+            <FunctionalGroups>
+                  <Group>SYSTEM</Group>
+               </FunctionalGroups>
+            </Output>
+         <Output DataType="ENE" Frequency="50">
+               <Settings>
+                  <Param Title="Time">Time</Param>
+               <Param Title="EnrgPot">EnrgPot</Param>
+               <Param Title="EnrgCoul">EnrgCoul</Param>
+               <Param Title="EnrgVdW">EnrgVdW</Param>
+               <Param Title="EnrgVdW_LRCor">EnrgVdW_LRCor</Param>
+               <Param Title="EnrgPME">EnrgPME</Param>
+               <Param Title="dHdL_Coul">dHdL_Coul</Param>
+               <Param Title="dHdL_Coul_SC">dHdL_Coul_SC</Param>
+               <Param Title="dHdL_VdW">dHdL_VdW</Param>
+               <Param Title="dHdL_VdW_SC">dHdL_VdW_SC</Param>
+               <Param Title="dHdL_PME">dHdL_PME</Param>
+               <Param Title="dHdL">dHdL</Param>
+               </Settings>
+            <FunctionalGroups>
+                  <Group>LIG-SLV</Group>
+               </FunctionalGroups>
+            </Output>
+         <Output DataType="ENE" Frequency="50">
+               <Settings>
+                  <Param Title="Time">Time</Param>
+               <Param Title="Temp">Temp</Param>
+               <Param Title="EnrgPot">EnrgPot</Param>
+               <Param Title="EnrgKin">EnrgKin</Param>
+               <Param Title="EnrgTotal">EnrgTotal</Param>
+               <Param Title="EnrgRestraint">EnrgRestraint</Param>
+               <Param Title="EnrgCoul">EnrgCoul</Param>
+               <Param Title="EnrgVdW">EnrgVdW</Param>
+               <Param Title="EnrgVdW_LRCor">EnrgVdW_LRCor</Param>
+               <Param Title="EnrgPME">EnrgPME</Param>
+               <Param Title="EnrgPol">EnrgPol</Param>
+               <Param Title="EnrgBond">EnrgBond</Param>
+               <Param Title="EnrgAngle">EnrgAngle</Param>
+               <Param Title="EnrgStretch">EnrgStretchBend</Param>
+               <Param Title="EnrgTorsion">EnrgTorsion</Param>
+               <Param Title="EnrgOOP">EnrgOutOfPlane</Param>
+               <Param Title="dHdL_Coul">dHdL_Coul</Param>
+               <Param Title="dHdL_Coul_SC">dHdL_Coul_SC</Param>
+               <Param Title="dHdL_VdW">dHdL_VdW</Param>
+               <Param Title="dHdL_VdW_SC">dHdL_VdW_SC</Param>
+               <Param Title="dHdL_Pol">dHdL_Pol</Param>
+               <Param Title="dHdL_Bonds">dHdL_Bonds</Param>
+               <Param Title="dHdL_Angles">dHdL_Angles</Param>
+               <Param Title="dHdL_StretchBend">dHdL_StretchBend</Param>
+               <Param Title="dHdL_Tors">dHdL_Tors</Param>
+               <Param Title="dHdL_OutPlane">dHdL_OutPlane</Param>
+               <Param Title="dHdL_LRCor">dHdL_LRCor</Param>
+               <Param Title="dHdL_PME">dHdL_PME</Param>
+               <Param Title="dHdL">dHdL</Param>
+               </Settings>
+            <FunctionalGroups>
+                  <Group>LIG</Group>
+               </FunctionalGroups>
+            </Output>
+         <Output DataType="BAR" Frequency="50">
+               <Settings>
+                  <Param Title="Time">Time</Param>
+               <Param Title="EnrgPot">EnrgPot</Param>
+               <Param Title="EnrgRestraint">EnrgRestraint</Param>
+               <Param Title="EnrgCoul">EnrgCoul</Param>
+               <Param Title="EnrgVdW">EnrgVdW</Param>
+               <Param Title="EnrgPol">EnrgPol</Param>
+               <Param Title="EnrgBond">EnrgBond</Param>
+               <Param Title="EnrgAngle">EnrgAngle</Param>
+               <Param Title="EnrgStretch">EnrgStretchBend</Param>
+               <Param Title="EnrgTorsion">EnrgTorsion</Param>
+               <Param Title="EnrgOOP">EnrgOutOfPlane</Param>
+               <Param Title="EnrgShell">EnrgShell</Param>
+               <Param Title="EnrgVdW_LRCor">EnrgVdW_LRCor</Param>
+               <Param Title="EnrgPME">EnrgPME</Param>
+               </Settings>
+            <FunctionalGroups>
+                  <Group>SYSTEM</Group>
+               </FunctionalGroups>
+            </Output>
+         <Output DataType="TRR" Frequency="5000" NumberPrecision="3" NumberWidth="8">
+               <Settings>
+                <Param Title="RecordGRO">true</Param>
+	        <Param Title="WritePIMDBeadsCrd">true</Param>
+                <Param Title="RecordHIN">false</Param>
+                <Param Title="RecordVEL">false</Param>
+                <Param Title="RecordFORCE">false</Param>
+               </Settings>
+            <FunctionalGroups>
+                  <Group>SYSTEM</Group>
+               </FunctionalGroups>
+            </Output>
+         <Output DataType="TRR" Frequency="500">
+               <Settings>
+                  <Param Title="RecordGRO">true</Param>
+                  <Param Title="WritePIMDBeadsCrd">true</Param>
+                  <Param Title="RecordHIN">false</Param>
+                  <Param Title="RecordVEL">false</Param>
+                  <Param Title="RecordFORCE">false</Param>
+               </Settings>
+            <FunctionalGroups>
+                  <Group>SYSTEM</Group>
+               </FunctionalGroups>
+            </Output>
+         </FileOutput>
+      </Task>
+   </TaskSequence>
+</Configuration>

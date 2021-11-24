@@ -1,0 +1,5 @@
+mol 1 "LIG"
+atom 1 O O OW - 0 0 0 0 2 2 s 3 s
+atom 2 H1 H HW - 0 1 0 0 1 1 s 
+atom 3 H2 H HW - 0 -0.334 0.941 0 1 1 s 
+endmol 1

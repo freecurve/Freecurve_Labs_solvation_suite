@@ -1,0 +1,5 @@
+mol 1 "SLV"
+atom 1 O  O OW hs 0  42.2794     17.8403     23.1727 2 2 s 3 s
+atom 2 H1 H HW hs 0  42.1966     18.1416     24.1223 1 1 s
+atom 3 H2 H HW hs 0  41.7681     18.4286     22.5465 1 1 s
+endmol 1
